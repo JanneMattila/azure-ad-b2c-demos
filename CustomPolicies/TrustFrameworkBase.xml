@@ -732,6 +732,7 @@
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="login-NonInteractive" />
+            <ValidationTechnicalProfile ReferenceId="REST-JanneMattilaEcho" />
           </ValidationTechnicalProfiles>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
         </TechnicalProfile>
@@ -879,6 +880,28 @@
             <InputClaim ClaimTypeReferenceId="verificationCode" />
             <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="emailAddress"/>
           </InputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Rest</DisplayName>
+      <TechnicalProfiles>
+        <!-- Example rest call to external system. -->
+        <TechnicalProfile Id="REST-JanneMattilaEcho">
+          <DisplayName>Use echo service as example rest call</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="ServiceUrl">https://echo.jannemattila.com/api/echo</Item>
+            <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="DefaultUserMessageIfRequestFailed">Cannot process your super important validation request right now, please try again later.</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="userPrincipalName" />
+          </InputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
