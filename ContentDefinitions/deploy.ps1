@@ -50,7 +50,7 @@ if ($null -eq (Get-AzResourceGroup -Name $DeploymentResourceGroupName -Location 
         -ResourceGroupName $DeploymentResourceGroupName `
         -Name $DeploymentStorageName `
         -Location $Location `
-        -SkuName Standard_LRS `
+        -SkuName Standard_RAGZRS `
         -EnableHttpsTrafficOnly $true
 }
 
