@@ -8,14 +8,21 @@ Read these articles before you continue:
 
 ---
 
-Connect to your Azure AD B2C tenant:
+Connect to your Azure AD B2C tenant and deploy custom policies:
 
 ```powershell
+$b2cTenantName = "<yourtenant.onmicrosoft.com>"
+$iefAppId = "<guid>"
+$proxyAppId = "<guid>"
+
 # Install-Module AzureADPreview
 Import-Module AzureADPreview
-
-$b2cTenantName = "jannemattilab2cdemo.onmicrosoft.com"
 Connect-AzureAD -TenantId $b2cTenantName
 
-Get-AzureADMSTrustFrameworkPolicy -Id B2C_1A_SignUpSignIn -OutputFilePath .\policies\B2C_1A_SignUpSignIn.xml
+# Deploy custom policies
+cd CustomPolicies
+.\deploy-all.ps1 `
+  -TenantName $b2cTenantName `
+  -IdentityExperienceFrameworkAppId $iefAppId `
+  -ProxyIdentityExperienceFrameworkAppId $proxyAppId
 ```
