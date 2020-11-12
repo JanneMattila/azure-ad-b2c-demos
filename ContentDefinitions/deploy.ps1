@@ -64,8 +64,8 @@ $corsRules = (@{
     })
 Set-AzStorageCORSRule -ServiceType Blob -CorsRules $corsRules
 
-$container = New-AzStorageContainer -Name $DeploymentContainer -Permission Blob -ErrorAction SilentlyContinue
-$container
+New-AzStorageContainer -Name $DeploymentContainer -Permission Blob -ErrorAction SilentlyContinue
+
 $folder = "$PSScriptRoot\"
 Get-ChildItem -File -Recurse $folder -Exclude *.ps1 `
 | ForEach-Object { 
@@ -76,3 +76,6 @@ Get-ChildItem -File -Recurse $folder -Exclude *.ps1 `
     $file = Set-AzStorageBlobContent -File $_.FullName -Blob $name -Container $DeploymentContainer -Properties $properties -Force
     Write-Host "Deploying file: $name -> $($file.ICloudBlob.Uri)"
 }
+
+$container = Get-AzStorageContainer -Name $DeploymentContainer
+"$($container.Context.BlobEndPoint)$($container.Name)/"

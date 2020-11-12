@@ -8,12 +8,26 @@ Read these articles before you continue:
 
 ---
 
-Connect to your Azure AD B2C tenant and deploy custom policies:
+Connect to your Azure AD B2C tenant, deploy html content and deploy custom policies:
 
 ```powershell
 $b2cTenantName = "<yourtenant.onmicrosoft.com>"
+$b2cUrl = "<yourtenant.b2clogin.com>"
+$resourceGroupName = "<your resource group name>"
+$storageName = "<your storage account name>"
 $iefAppId = "<guid>"
 $proxyAppId = "<guid>"
+
+Login-AzAccount
+Select-AzSubscription -SubscriptionName "<your subscription name>"
+
+# Deploy html content
+cd ContentDefinitions
+$contentRootUri = .\deploy.ps1 `
+  -DeploymentResourceGroupName $resourceGroupName `
+  -DeploymentStorageName $storageName `
+  -TenantUrl $b2cUrl
+cd ..
 
 # Install-Module AzureADPreview
 Import-Module AzureADPreview
@@ -23,6 +37,7 @@ Connect-AzureAD -TenantId $b2cTenantName
 cd CustomPolicies
 .\deploy-all.ps1 `
   -TenantName $b2cTenantName `
+  -ContentRootUri $contentRoot `
   -IdentityExperienceFrameworkAppId $iefAppId `
   -ProxyIdentityExperienceFrameworkAppId $proxyAppId
 ```
