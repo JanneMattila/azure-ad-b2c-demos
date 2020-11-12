@@ -54,7 +54,8 @@ if ($null -eq (Get-AzResourceGroup -Name $DeploymentResourceGroupName -Location 
         -EnableHttpsTrafficOnly $true
 }
 
-Set-AzCurrentStorageAccount -ResourceGroupName $DeploymentResourceGroupName -Name $DeploymentStorageName
+$storage = Set-AzCurrentStorageAccount -ResourceGroupName $DeploymentResourceGroupName -Name $DeploymentStorageName
+$storage
 $corsRules = (@{
         AllowedHeaders  = @("*");
         AllowedOrigins  = @("https://$TenantUrl");
@@ -73,5 +74,5 @@ Get-ChildItem -File -Recurse $folder -Exclude *.ps1 `
     $properties = @{"ContentType" = $contentType }
 
     $file = Set-AzStorageBlobContent -File $_.FullName -Blob $name -Container $DeploymentContainer -Properties $properties -Force
-    Write-Host "Deploying file: $name -> https://$TenantUrl/$DeploymentContainer/$($file.Name)"
+    Write-Host "Deploying file: $name -> $($file.ICloudBlob.Uri)"
 }
