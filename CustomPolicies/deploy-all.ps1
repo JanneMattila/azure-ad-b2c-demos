@@ -1,7 +1,10 @@
 Param (
     [Parameter(HelpMessage = "Tenant name")] 
     [string] $TenantName = "jannemattilab2cdemo.onmicrosoft.com",
-    
+
+    [Parameter(HelpMessage = "Content definitions root uri")] 
+    [string] $ContentRootUri = "https://jannemattilab2cdemo.blob.core.windows.net/b2c/",
+
     [Parameter(HelpMessage = "IEF App Id")] 
     [string] $IdentityExperienceFrameworkAppId = "7710d04e-f1bf-4ccb-a182-0c24ff1abd9b",
     
@@ -18,6 +21,7 @@ foreach ($customPolicy in $customPolicies) {
     .\deploy.ps1 `
         -CustomPolicy $customPolicy `
         -TenantName $TenantName `
+        -ContentRootUri $ContentRootUri `
         -IdentityExperienceFrameworkAppId $IdentityExperienceFrameworkAppId `
         -ProxyIdentityExperienceFrameworkAppId $ProxyIdentityExperienceFrameworkAppId
 }

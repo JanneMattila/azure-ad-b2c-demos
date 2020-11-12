@@ -4,6 +4,9 @@ Param (
 
     [Parameter(HelpMessage = "Tenant name", Mandatory = $true)] 
     [string] $TenantName,
+
+    [Parameter(HelpMessage = "Content definitions root uri", Mandatory = $true)] 
+    [string] $ContentRootUri,
     
     [Parameter(HelpMessage = "IEF App Id", Mandatory = $true)] 
     [string] $IdentityExperienceFrameworkAppId,
@@ -18,6 +21,7 @@ $sourceFile = "$PSScriptRoot\$CustomPolicy.xml"
 $targetFile = "$PSScriptRoot\Deploy-$CustomPolicy.xml"
 Get-Content $sourceFile | `
         ForEach-Object { $_ -Replace "yourtenant.onmicrosoft.com", $TenantName } | `
+        ForEach-Object { $_ -Replace "~/tenant/templates/AzureBlue/", $ContentRootUri } | `
         ForEach-Object { $_ -Replace "ProxyIdentityExperienceFrameworkAppId", $ProxyIdentityExperienceFrameworkAppId } | `
         ForEach-Object { $_ -Replace "IdentityExperienceFrameworkAppId", $IdentityExperienceFrameworkAppId } | `
         Set-Content $targetFile

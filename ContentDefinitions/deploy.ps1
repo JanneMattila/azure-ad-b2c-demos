@@ -54,8 +54,8 @@ if ($null -eq (Get-AzResourceGroup -Name $DeploymentResourceGroupName -Location 
         -EnableHttpsTrafficOnly $true
 }
 
-$storage = Set-AzCurrentStorageAccount -ResourceGroupName $DeploymentResourceGroupName -Name $DeploymentStorageName
-$storage
+Set-AzCurrentStorageAccount -ResourceGroupName $DeploymentResourceGroupName -Name $DeploymentStorageName
+
 $corsRules = (@{
         AllowedHeaders  = @("*");
         AllowedOrigins  = @("https://$TenantUrl");
