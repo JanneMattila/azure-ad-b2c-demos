@@ -7,7 +7,6 @@ Param (
     
     [Parameter(HelpMessage = "Proxy IEF App Id")] 
     [string] $ProxyIdentityExperienceFrameworkAppId = "e527f2ea-baff-4312-abb1-1a190a8ba9b3"
-
 )
 
 $ErrorActionPreference = "Stop"

@@ -12,13 +12,11 @@
     <TenantId>yourtenant.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkBase</PolicyId>
   </BasePolicy>
-  <BuildingBlocks>
 
+  <BuildingBlocks>
   </BuildingBlocks>
 
   <ClaimsProviders>
-
-
     <ClaimsProvider>
       <DisplayName>Local Account SignIn</DisplayName>
       <TechnicalProfiles>
@@ -34,11 +32,9 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
-
   </ClaimsProviders>
 
-    <!--UserJourneys>
-	
-	</UserJourneys-->
+  <UserJourneys>
+  </UserJourneys>
 
 </TrustFrameworkPolicy>
