@@ -34,7 +34,4 @@
     </ClaimsProvider>
   </ClaimsProviders>
 
-  <UserJourneys>
-  </UserJourneys>
-
 </TrustFrameworkPolicy>
