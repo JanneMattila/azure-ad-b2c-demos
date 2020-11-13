@@ -17,6 +17,8 @@ $resourceGroupName = "<your resource group name>"
 $storageName = "<your storage account name>"
 $iefAppId = "<guid>"
 $proxyAppId = "<guid>"
+$instrumentationKey = "<app insights instrumentation key>"
+$loggingMode = "Development" # or 'Production'
 
 Login-AzAccount
 Select-AzSubscription -SubscriptionName "<your subscription name>"
@@ -36,5 +38,7 @@ Connect-AzureAD -TenantId $b2cTenantName
   -TenantName $b2cTenantName `
   -ContentRootUri $contentRootUri `
   -IdentityExperienceFrameworkAppId $iefAppId `
-  -ProxyIdentityExperienceFrameworkAppId $proxyAppId
+  -ProxyIdentityExperienceFrameworkAppId $proxyAppId `
+  -InstrumentationKey $instrumentationKey `
+  -LoggingMode $loggingMode
 ```
