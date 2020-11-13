@@ -30,7 +30,7 @@ $contentRootUri = .\deploy.ps1 `
 cd ..
 
 # Install-Module AzureADPreview
-Import-Module AzureADPreview
+Import-Module AzureADPreview -UseWindowsPowerShell
 Connect-AzureAD -TenantId $b2cTenantName
 
 # Deploy custom policies
