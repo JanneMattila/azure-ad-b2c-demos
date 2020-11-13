@@ -1,30 +1,27 @@
 Param (
-    [Parameter(HelpMessage = "Custom policy name to deploy", Mandatory = $true)] 
-    [string] $CustomPolicy,
+    [Parameter(HelpMessage = "Tenant name")] 
+    [string] $TenantName = "jannemattilab2cdemo.onmicrosoft.com",
 
-    [Parameter(HelpMessage = "Tenant name", Mandatory = $true)] 
-    [string] $TenantName,
+    [Parameter(HelpMessage = "Content definitions root uri")] 
+    [string] $ContentRootUri = "https://jannemattilab2cdemo.blob.core.windows.net/b2c/",
 
-    [Parameter(HelpMessage = "Content definitions root uri", Mandatory = $true)] 
-    [string] $ContentRootUri,
+    [Parameter(HelpMessage = "IEF App Id")] 
+    [string] $IdentityExperienceFrameworkAppId = "7710d04e-f1bf-4ccb-a182-0c24ff1abd9b",
     
-    [Parameter(HelpMessage = "IEF App Id", Mandatory = $true)] 
-    [string] $IdentityExperienceFrameworkAppId,
-    
-    [Parameter(HelpMessage = "Proxy IEF App Id", Mandatory = $true)] 
-    [string] $ProxyIdentityExperienceFrameworkAppId
+    [Parameter(HelpMessage = "Proxy IEF App Id")] 
+    [string] $ProxyIdentityExperienceFrameworkAppId = "e527f2ea-baff-4312-abb1-1a190a8ba9b3"
 )
 
 $ErrorActionPreference = "Stop"
 
-$sourceFile = "$PSScriptRoot\$CustomPolicy.xml"
-$targetFile = "$PSScriptRoot\Deploy-$CustomPolicy.xml"
-Get-Content $sourceFile | `
-        ForEach-Object { $_ -Replace "yourtenant.onmicrosoft.com", $TenantName } | `
-        ForEach-Object { $_ -Replace "~/tenant/templates/AzureBlue/", $ContentRootUri } | `
-        ForEach-Object { $_ -Replace "ProxyIdentityExperienceFrameworkAppId", $ProxyIdentityExperienceFrameworkAppId } | `
-        ForEach-Object { $_ -Replace "IdentityExperienceFrameworkAppId", $IdentityExperienceFrameworkAppId } | `
-        Set-Content $targetFile
+$customPolicies = "TrustFrameworkBase", "TrustFrameworkExtensions", "SignUpOrSignin", "ProfileEdit", "PasswordReset"
 
-Set-AzureADMSTrustFrameworkPolicy -Id "B2C_1A_$CustomPolicy" -InputFilePath $targetFile | Out-Null
-Remove-Item $targetFile
+foreach ($customPolicy in $customPolicies) {
+    "Deploying $customPolicy..."
+    .\deploy-single-policy.ps1 `
+        -CustomPolicy $customPolicy `
+        -TenantName $TenantName `
+        -ContentRootUri $ContentRootUri `
+        -IdentityExperienceFrameworkAppId $IdentityExperienceFrameworkAppId `
+        -ProxyIdentityExperienceFrameworkAppId $ProxyIdentityExperienceFrameworkAppId
+}

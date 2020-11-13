@@ -35,7 +35,7 @@ Connect-AzureAD -TenantId $b2cTenantName
 
 # Deploy custom policies
 cd CustomPolicies
-.\deploy-all.ps1 `
+.\deploy.ps1 `
   -TenantName $b2cTenantName `
   -ContentRootUri $contentRootUri `
   -IdentityExperienceFrameworkAppId $iefAppId `
