@@ -18,7 +18,7 @@ $customPolicies = "TrustFrameworkBase", "TrustFrameworkExtensions", "SignUpOrSig
 
 foreach ($customPolicy in $customPolicies) {
     "Deploying $customPolicy..."
-    .\deploy-single-policy.ps1 `
+    . "$PSScriptRoot\deploy-single-policy.ps1" `
         -CustomPolicy $customPolicy `
         -TenantName $TenantName `
         -ContentRootUri $ContentRootUri `

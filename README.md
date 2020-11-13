@@ -22,20 +22,17 @@ Login-AzAccount
 Select-AzSubscription -SubscriptionName "<your subscription name>"
 
 # Deploy html content
-cd ContentDefinitions
-$contentRootUri = .\deploy.ps1 `
+.\ContentDefinitions\deploy.ps1 `
   -DeploymentResourceGroupName $resourceGroupName `
   -DeploymentStorageName $storageName `
   -TenantUrl $b2cUrl
-cd ..
 
 # Install-Module AzureADPreview
 Import-Module AzureADPreview -UseWindowsPowerShell
 Connect-AzureAD -TenantId $b2cTenantName
 
 # Deploy custom policies
-cd CustomPolicies
-.\deploy.ps1 `
+.\CustomPolicies\deploy.ps1 `
   -TenantName $b2cTenantName `
   -ContentRootUri $contentRootUri `
   -IdentityExperienceFrameworkAppId $iefAppId `
