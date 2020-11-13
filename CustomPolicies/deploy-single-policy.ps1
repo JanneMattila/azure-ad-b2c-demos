@@ -12,7 +12,13 @@ Param (
     [string] $IdentityExperienceFrameworkAppId,
     
     [Parameter(HelpMessage = "Proxy IEF App Id", Mandatory = $true)] 
-    [string] $ProxyIdentityExperienceFrameworkAppId
+    [string] $ProxyIdentityExperienceFrameworkAppId,
+    
+    [Parameter(HelpMessage = "Application Insights Instrumentation Key", Mandatory = $true)] 
+    [string] $InstrumentationKey,
+
+    [Parameter(HelpMessage = "Logging mode", Mandatory = $true)] 
+    [string] $LoggingMode
 )
 
 $ErrorActionPreference = "Stop"
@@ -24,6 +30,8 @@ Get-Content $sourceFile | `
         ForEach-Object { $_ -Replace "~/tenant/templates/AzureBlue/", $ContentRootUri } | `
         ForEach-Object { $_ -Replace "ProxyIdentityExperienceFrameworkAppId", $ProxyIdentityExperienceFrameworkAppId } | `
         ForEach-Object { $_ -Replace "IdentityExperienceFrameworkAppId", $IdentityExperienceFrameworkAppId } | `
+        ForEach-Object { $_ -Replace "APPINSIGHTS_INSTRUMENTATIONKEY", $InstrumentationKey } | `
+        ForEach-Object { $_ -Replace "APPINSIGHTS_LOGGINGMODE", $LoggingMode } | `
         Set-Content $targetFile
 
 Set-AzureADMSTrustFrameworkPolicy -Id "B2C_1A_$CustomPolicy" -InputFilePath $targetFile | Out-Null

@@ -6,7 +6,9 @@
   PolicySchemaVersion="0.3.0.0"
   TenantId="yourtenant.onmicrosoft.com"
   PolicyId="B2C_1A_ProfileEdit"
-  PublicPolicyUri="http://yourtenant.onmicrosoft.com/B2C_1A_ProfileEdit">
+  PublicPolicyUri="http://yourtenant.onmicrosoft.com/B2C_1A_ProfileEdit"
+  DeploymentMode="APPINSIGHTS_LOGGINGMODE"
+  UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights">
 
   <BasePolicy>
     <TenantId>yourtenant.onmicrosoft.com</TenantId>
@@ -15,6 +17,14 @@
 
   <RelyingParty>
     <DefaultUserJourney ReferenceId="ProfileEdit" />
+    <UserJourneyBehaviors>
+      <JourneyInsights TelemetryEngine="ApplicationInsights" 
+        InstrumentationKey="APPINSIGHTS_INSTRUMENTATIONKEY" 
+        DeveloperMode="true" 
+        ClientEnabled="true" 
+        ServerEnabled="true" 
+        TelemetryVersion="1.0.0" />
+    </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
