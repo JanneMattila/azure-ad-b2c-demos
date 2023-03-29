@@ -11,5 +11,6 @@ public class APIConnectorResponse
     public string Action { get; set; }
 
     [JsonPropertyName("userMessage")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string UserMessage { get; set; }
 }

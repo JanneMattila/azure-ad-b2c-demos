@@ -1,8 +1,10 @@
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using WebAppAzureADB2CAPIConnector.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<InvitationRepository>();
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen(c =>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
+using WebAppAzureADB2CAPIConnector.Data;
 
 namespace WebApp.Controllers;
 
@@ -9,10 +10,12 @@ namespace WebApp.Controllers;
 public class ValidationController : ControllerBase
 {
     private readonly ILogger<ValidationController> _logger;
+    private readonly InvitationRepository _invitationRepository;
 
-    public ValidationController(ILogger<ValidationController> logger)
+    public ValidationController(ILogger<ValidationController> logger, InvitationRepository invitationRepository)
     {
         _logger = logger;
+        _invitationRepository = invitationRepository;
     }
 
     /// <summary>
@@ -29,13 +32,24 @@ public class ValidationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ObjectResult Post(APIConnectorRequest request)
     {
-        var response = new APIConnectorResponse()
+        if (_invitationRepository.Contains(request.Email))
         {
-            Version = "1.0.0",
-            Action = "ShowBlockPage",
-            UserMessage = "You are not able to sign up at this time. Please reach out to your support contact."
-        };
-
-        return new ObjectResult(response);
+            var response = new APIConnectorResponse()
+            {
+                Version = "1.0.0",
+                Action = "Continue"
+            };
+            return new ObjectResult(response);
+        }
+        else
+        {
+            var response = new APIConnectorResponse()
+            {
+                Version = "1.0.0",
+                Action = "ShowBlockPage",
+                UserMessage = "You are not able to sign up at this time. Please reach out to your support contact."
+            };
+            return new ObjectResult(response);
+        }
     }
 }
