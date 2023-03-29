@@ -1,4 +1,6 @@
-# Azure AD B2C Demo
+# Azure AD B2C Demos
+
+## Deploying custom policies
 
 Read these articles before you continue:
 
@@ -42,3 +44,7 @@ Connect-AzureAD -TenantId $b2cTenantName
   -InstrumentationKey $instrumentationKey `
   -LoggingMode $loggingMode
 ```
+
+### API Connectors
+
+[Add an API connector to a sign-up user flow](https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector)
