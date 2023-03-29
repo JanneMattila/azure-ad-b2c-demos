@@ -47,4 +47,9 @@ Connect-AzureAD -TenantId $b2cTenantName
 
 ### API Connectors
 
-[Add an API connector to a sign-up user flow](https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector)
+Read more about API Connectors for Azure AD B2C from these links:
+
+- [Use API connectors to customize and extend sign-up user flows and custom policies with external identity data sources](https://learn.microsoft.com/en-us/azure/active-directory-b2c/api-connectors-overview)
+- [Add an API connector to a sign-up user flow](https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector)
+- [API connector REST API samples](https://learn.microsoft.com/en-us/azure/active-directory-b2c/api-connector-samples)
+  - [user-flow-invitation-code](https://github.com/Azure-Samples/active-directory-b2c-node-sign-up-user-flow-invitation-code)
