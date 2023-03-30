@@ -6,9 +6,14 @@ public class InvitationRepository
 {
     private ConcurrentDictionary<string, string> _invitations = new();
 
-    public void Add(string email)
+    public void Add(string email, string invitationCode)
     {
         _invitations.AddOrUpdate(email, email, (key, value) => email);
+    }
+
+    public string Get(string email)
+    {
+        return _invitations[email];
     }
 
     public void Remove(string email)

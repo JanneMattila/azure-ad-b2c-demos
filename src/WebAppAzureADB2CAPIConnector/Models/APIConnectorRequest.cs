@@ -49,4 +49,7 @@ public class APIConnectorRequest
 
     [JsonPropertyName("identities")]
     public List<APIConnectorIdentity> Identities { get; set; }
+
+    [JsonExtensionData]
+    public Dictionary<string, object> AdditionalFields { get; set; }
 }

@@ -1,12 +1,17 @@
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using WebAppAzureADB2CAPIConnector.Data;
+using WebAppAzureADB2CAPIConnector.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<InvitationRepository>();
 builder.Services.AddControllers();
-
+builder.Services.AddOptions<ValidationOptions>()
+    .Configure<IConfiguration>((settings, configuration) =>
+    {
+        configuration.GetSection("ValidationOptions").Bind(settings);
+    });
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo

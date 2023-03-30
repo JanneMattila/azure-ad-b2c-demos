@@ -39,7 +39,7 @@ public class InvitationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public OkResult Post(InvitationRequest request)
     {
-        _invitationRepository.Add(request.Email);
+        _invitationRepository.Add(request.Email, request.InvitationCode);
         return Ok();
     }
 
