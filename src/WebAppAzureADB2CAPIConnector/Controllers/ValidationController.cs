@@ -49,64 +49,60 @@ public class ValidationController : ControllerBase
 
         var version = "1.0.0";
 
-        if (!_invitationRepository.Contains(request.Email))
+        // Are we using invitation code validation?
+        if (string.IsNullOrEmpty(_options.InvitationCodeAttributeField))
         {
-            var blockedResponse = new APIConnectorResponse()
+            // No invitation code attribute implemented, so skip validating invitation code
+            if (_invitationRepository.Contains(request.Email))
+            {
+                // This user is in our invitation list
+                _invitationRepository.Remove(request.Email);
+                return Ok(new APIConnectorResponse()
+                {
+                    Version = version,
+                    Action = "Continue"
+                });
+            }
+
+            // User is not in the invitation list. Show block page.
+            return Ok(new APIConnectorResponse()
             {
                 Version = version,
                 Action = "ShowBlockPage",
                 UserMessage = _options.UserMessageBlocked
-            };
-            return Ok(blockedResponse);
+            });
         }
-
-        if (string.IsNullOrEmpty(_options.InvitationCodeAttributeField))
+        else
         {
-            // No invitation extension implemented, so skip validating it.
-            var response = new APIConnectorResponse()
+            // Invitation code verification is in use
+            if (_invitationRepository.Contains(request.Email) &&
+                request.AdditionalFields.ContainsKey(_options.InvitationCodeAttributeField))
             {
-                Version = version,
-                Action = "Continue"
-            };
-            _invitationRepository.Remove(request.Email);
-            return Ok(response);
-        }
+                var storedInvitationCode = _invitationRepository.Get(request.Email);
+                var incomingInvitationCode = request.AdditionalFields[_options.InvitationCodeAttributeField].ToString();
 
-        // Validate incoming invitation code
-        if (!request.AdditionalFields.ContainsKey(_options.InvitationCodeAttributeField))
-        {
-            var invitationCodeMissingResponse = new APIConnectorResponse()
+                if (storedInvitationCode == incomingInvitationCode)
+                {
+                    // Invitation code validated successfully
+                    _invitationRepository.Remove(request.Email);
+                    var response = new Dictionary<string, string>()
+                    {
+                        { "version", version },
+                        { "action", "Continue" },
+                        { _options.InvitationCodeAttributeField, "" } // Clean up invitation field data from directory
+                    };
+                    return Ok(response);
+                }
+            }
+
+            // If we couldn't succesfully verify code, then we'll force user to re-input the code.
+            return BadRequest(new APIConnectorResponse()
             {
                 Version = version,
                 Action = "ValidationError",
-                UserMessage = _options.UserMessageInvitationCodeMissing
-            };
-            return BadRequest(invitationCodeMissingResponse);
+                UserMessage = _options.UserMessageValidInvitationCodeRequired
+            });
         }
-
-        var storedInvitationCode = _invitationRepository.Get(request.Email);
-        var incomingInvitationCode = request.AdditionalFields[_options.InvitationCodeAttributeField].ToString();
-
-        if (storedInvitationCode == incomingInvitationCode)
-        {
-            // Invitation code validated successfully
-            _invitationRepository.Remove(request.Email);
-            var response = new Dictionary<string, string>()
-            {
-                { "version", version },
-                { "action", "Continue" },
-                { _options.InvitationCodeAttributeField, "" } // Clean up invitation field data from directory
-            };
-            return Ok(response);
-        }
-
-        var invalidInvitationCodeResponse = new APIConnectorResponse()
-        {
-            Version = version,
-            Action = "ShowBlockPage",
-            UserMessage = _options.UserMessageInvalidInvitationCode
-        };
-        return Ok(invalidInvitationCodeResponse);
     }
 
     private bool Authenticate()

@@ -24,6 +24,5 @@ public class ValidationOptions
     public string InvitationCodeAttributeField { get; set; }
 
     public string UserMessageBlocked { get; set; } = UserMessageConstants.Blocked;
-    public string UserMessageInvitationCodeMissing { get; set; } = UserMessageConstants.InvitationCodeMissing;
-    public string UserMessageInvalidInvitationCode { get; set; } = UserMessageConstants.InvalidInvitationCode;
+    public string UserMessageValidInvitationCodeRequired { get; set; } = UserMessageConstants.ValidInvitationCodeRequired;
 }
