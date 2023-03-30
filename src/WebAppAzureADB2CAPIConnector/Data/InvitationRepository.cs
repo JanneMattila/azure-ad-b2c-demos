@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using WebApp.Models;
 
 namespace WebAppAzureADB2CAPIConnector.Data;
 
@@ -8,7 +9,7 @@ public class InvitationRepository
 
     public void Add(string email, string invitationCode)
     {
-        _invitations.AddOrUpdate(email, email, (key, value) => email);
+        _invitations.AddOrUpdate(email, invitationCode, (key, value) => invitationCode);
     }
 
     public string Get(string email)
@@ -26,8 +27,14 @@ public class InvitationRepository
         return _invitations.ContainsKey(email);
     }
 
-    public List<string> GetAllInvitations()
+    public List<Invitation> GetAllInvitations()
     {
-        return _invitations.Keys.ToList();
+        return _invitations
+            .Select(o => new Invitation()
+            {
+                Email = o.Key,
+                InvitationCode = o.Value
+            })
+            .ToList();
     }
 }
