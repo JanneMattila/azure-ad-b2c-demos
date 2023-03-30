@@ -1,32 +1,78 @@
- @endpoint = https://localhost:44312
+ @endpoint = https://localhost:5001
 
-### Get files
-POST {{endpoint}}/api/files HTTP/1.1
+### Get invitations
+GET {{endpoint}}/api/invitation HTTP/1.1
+Content-Type: application/json
+
+### Create invitation
+POST {{endpoint}}/api/invitation HTTP/1.1
 Content-Type: application/json
 
 {
-    "path": "C:\\home\\site\\wwwroot\\App_data",
-    "recursive": true,
-    "filter": "*"
+    "email": "admin@contoso.com",
+    "invitationCode": "1122334455"
 }
 
-### Delete files
-DELETE {{endpoint}}/api/files HTTP/1.1
+### Validate without invitation code
+POST {{endpoint}}/api/validation HTTP/1.1
 Content-Type: application/json
+Authorization: Basic apiconnector:$uperSecr€t1!
 
 {
-    "path": "C:\\home\\site\\wwwroot\\App_data",
-    "recursive": true
+  "step": "string",
+  "objectId": "string",
+  "givenName": "string",
+  "surname": "string",
+  "jobTitle": "string",
+  "streetAddress": "string",
+  "city": "string",
+  "postalCode": "string",
+  "state": "string",
+  "country": "string",
+  "client_id": "string",
+  "ui_locales": "string",
+  "email": "string",
+  "displayName": "string",
+  "identities": [
+    {
+      "signInType": "string",
+      "issuer": "string",
+      "issuerAssignedId": "string"
+    }
+  ],
+  "additionalProp1": "string",
+  "additionalProp2": "string",
+  "additionalProp3": "string"
 }
 
-### Generate files
-POST {{endpoint}}/api/generate HTTP/1.1
+### Validate with invitation code
+POST {{endpoint}}/api/validation HTTP/1.1
 Content-Type: application/json
+Authorization: Basic apiconnector:$uperSecr€t1!
 
 {
-    "path": "C:\\home\\site\\wwwroot\\cat-images7",
-    "folders": 10,
-    "subFolders": 10,
-    "filesPerFolder": 10,
-    "fileSize": 1024
+  "step": "string",
+  "objectId": "string",
+  "givenName": "string",
+  "surname": "string",
+  "jobTitle": "string",
+  "streetAddress": "string",
+  "city": "string",
+  "postalCode": "string",
+  "state": "string",
+  "country": "string",
+  "client_id": "string",
+  "ui_locales": "string",
+  "email": "admin@contoso.com",
+  "displayName": "string",
+  "identities": [
+    {
+      "signInType": "string",
+      "issuer": "string",
+      "issuerAssignedId": "string"
+    }
+  ],
+  "extension_af3257c73cb0499da4b1ef4e0db3be1f_InvitationCode": "1122334455",
+  "additionalProp2": "string",
+  "additionalProp3": "string"
 }

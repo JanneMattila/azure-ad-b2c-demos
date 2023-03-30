@@ -10,7 +10,7 @@ public class ValidationOptions
     public string Username { get; set; }
 
     /// <summary>
-    /// Base64 encoded password
+    /// Plaintext password
     /// </summary>
     public string Password { get; set; }
 

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using System.Net.Http.Headers;
+using System.Text;
 using WebApp.Models;
 using WebAppAzureADB2CAPIConnector.Data;
 using WebAppAzureADB2CAPIConnector.Models;
@@ -119,7 +120,9 @@ public class ValidationController : ControllerBase
             {
                 if (string.Compare(parsedValue.Scheme, "basic", true) == 0)
                 {
-                    var parts = parsedValue.Parameter.Split(':');
+                    var data = Convert.FromBase64String(parsedValue.Parameter);
+                    var headerValue = Encoding.UTF8.GetString(data);
+                    var parts = headerValue.Split(':');
                     if (parts.Length == 2)
                     {
                         if (parts[0] == _options.Username &&
