@@ -57,7 +57,7 @@ public class ValidationController : ControllerBase
                 Action = "ShowBlockPage",
                 UserMessage = _options.UserMessageBlocked
             };
-            return BadRequest(blockedResponse);
+            return Ok(blockedResponse);
         }
 
         if (string.IsNullOrEmpty(_options.InvitationCodeAttributeField))
@@ -69,7 +69,7 @@ public class ValidationController : ControllerBase
                 Action = "Continue"
             };
             _invitationRepository.Remove(request.Email);
-            return new ObjectResult(response);
+            return Ok(response);
         }
 
         // Validate incoming invitation code
@@ -97,7 +97,7 @@ public class ValidationController : ControllerBase
                 { "action", "Continue" },
                 { _options.InvitationCodeAttributeField, "" } // Clean up invitation field data from directory
             };
-            return new OkObjectResult(response);
+            return Ok(response);
         }
 
         var invalidInvitationCodeResponse = new APIConnectorResponse()
@@ -106,7 +106,7 @@ public class ValidationController : ControllerBase
             Action = "ShowBlockPage",
             UserMessage = _options.UserMessageInvalidInvitationCode
         };
-        return BadRequest(invalidInvitationCodeResponse);
+        return Ok(invalidInvitationCodeResponse);
     }
 
     private bool Authenticate()
