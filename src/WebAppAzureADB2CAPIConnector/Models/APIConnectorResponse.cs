@@ -10,6 +10,10 @@ public class APIConnectorResponse
     [JsonPropertyName("action")]
     public string Action { get; set; }
 
+    [JsonPropertyName("status")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string Status { get; set; }
+
     [JsonPropertyName("userMessage")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string UserMessage { get; set; }

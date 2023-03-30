@@ -101,6 +101,7 @@ public class ValidationController : ControllerBase
             {
                 Version = version,
                 Action = "ValidationError",
+                Status = "400",
                 UserMessage = _options.UserMessageValidInvitationCodeRequired
             });
         }
