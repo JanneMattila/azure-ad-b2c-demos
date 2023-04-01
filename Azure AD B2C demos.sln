@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{015F721E-B98
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppAzureADB2CAPIConnector", "src\WebAppAzureADB2CAPIConnector\WebAppAzureADB2CAPIConnector.csproj", "{FE389A38-63D9-471C-A49C-BF4C5CCA835C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppAzureADB2CAPIConnectorTests", "test\unit\WebAppAzureADB2CAPIConnectorTests\WebAppAzureADB2CAPIConnectorTests.csproj", "{2586841E-E129-4B97-B047-4C97711C971E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{FE389A38-63D9-471C-A49C-BF4C5CCA835C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE389A38-63D9-471C-A49C-BF4C5CCA835C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE389A38-63D9-471C-A49C-BF4C5CCA835C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2586841E-E129-4B97-B047-4C97711C971E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2586841E-E129-4B97-B047-4C97711C971E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2586841E-E129-4B97-B047-4C97711C971E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2586841E-E129-4B97-B047-4C97711C971E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{6A01D915-7711-4826-8580-E623861BDC41} = {6CDF8A68-D4A7-4E25-9F86-49E93749B01E}
 		{015F721E-B98C-4AF4-8156-CBA81B93DDC2} = {7E9AF29F-12C1-405A-8B40-0041179DEBEC}
 		{FE389A38-63D9-471C-A49C-BF4C5CCA835C} = {4EF08C94-B952-4183-8D20-7036E5FD2661}
+		{2586841E-E129-4B97-B047-4C97711C971E} = {6A01D915-7711-4826-8580-E623861BDC41}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C62476CF-78BF-4D36-8BE2-D57595CE6E16}

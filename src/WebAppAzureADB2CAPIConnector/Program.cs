@@ -1,7 +1,10 @@
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using WebAppAzureADB2CAPIConnector.Data;
 using WebAppAzureADB2CAPIConnector.Models;
+
+[assembly: InternalsVisibleTo("WebAppAzureADB2CAPIConnectorTests")]
 
 var builder = WebApplication.CreateBuilder(args);
 

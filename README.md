@@ -53,5 +53,5 @@ Read more about API Connectors for Azure AD B2C from these links:
 - [Add an API connector to a sign-up user flow](https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector)
 - [API connector REST API samples](https://learn.microsoft.com/en-us/azure/active-directory-b2c/api-connector-samples)
   - [user-flow-invitation-code](https://github.com/Azure-Samples/active-directory-b2c-node-sign-up-user-flow-invitation-code)
-
+  - [api-connector-samples](https://github.com/azure-ad-b2c/api-connector-samples)
 [Example Azure AD B2C sample](https://github.com/Azure-Samples/active-directory-aspnetcore-webapp-openidconnect-v2/tree/master/1-WebApp-OIDC/1-5-B2C)

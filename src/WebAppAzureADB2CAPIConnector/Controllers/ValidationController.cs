@@ -107,7 +107,7 @@ public class ValidationController : ControllerBase
         }
     }
 
-    private bool Authenticate()
+    internal bool Authenticate()
     {
         if (_options.SkipBasicAuthentication)
         {

@@ -2,8 +2,13 @@ variables:
   repository: 'jannemattila/webapp-azuread-b2c-api-connector'
 
 trigger:
-- main
-- develop
+  branches:
+    include:
+    - main
+    - develop
+  paths:
+    include:
+    - src/WebAppAzureADB2CAPIConnector
 
 name: 1.0.$(Rev:r)
 stages:
