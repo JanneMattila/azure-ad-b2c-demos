@@ -14,6 +14,23 @@ https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector-t
 
 You want to call Rest API from your custom policy to add additional claims to the token.
 
+Here is the sequence diagram of the scenario:
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Application
+    participant Azure AD B2C
+    participant Rest API
+    User->>Application: Go to application<br/>as anonymous user
+    Application->>User: Redirect to login
+    User->>Azure AD B2C: Login
+    Azure AD B2C-->>Rest API: Fetch additonal<br/>details
+    Rest API-->>Azure AD B2C: Return "customColors"
+    Azure AD B2C->>User: Redirect back to application
+    User->>Application: Use application<br/>as logged in user
+```
+
 Rest API will return `customColors` string array.
 
 Add new claim type to define this type:
