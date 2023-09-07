@@ -1,4 +1,4 @@
- @endpoint = https://localhost:5001
+ @endpoint = https://blbpcnjx-5001.euw.devtunnels.ms
 
 ### Get invitations
 GET {{endpoint}}/api/invitation HTTP/1.1
@@ -75,4 +75,15 @@ Authorization: Basic apiconnector:$uperSecr€t1!
   "extension_af3257c73cb0499da4b1ef4e0db3be1f_InvitationCode": "1122334455",
   "additionalProp2": "string",
   "additionalProp3": "string"
+}
+
+### Get invitations
+POST {{endpoint}}/api/ClaimExtender HTTP/1.1
+Content-Type: application/json
+
+{
+  "userPrincipalName": "5e5a77ac-6a6a-4ed7-8df2-e2792f1da401@<yourtenantname>.onmicrosoft.com",
+  "objectId": "5e5a77ac-6a6a-4ed7-8df2-e2792f1da401",
+  "givenName": "John",
+  "surName": "Smith"
 }

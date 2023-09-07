@@ -35,11 +35,11 @@
         <OutputClaim ClaimTypeReferenceId="email" />
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub"/>
         <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+
+        <!-- Example additional custom claim -->
+        <OutputClaim ClaimTypeReferenceId="customColors" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />
     </TechnicalProfile>
   </RelyingParty>
 </TrustFrameworkPolicy>
-
-
-

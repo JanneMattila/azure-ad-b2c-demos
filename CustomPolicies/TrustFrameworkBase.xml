@@ -195,6 +195,12 @@
         <UserHelpText>Email addresses that can be used to contact the user.</UserHelpText>
       </ClaimType>
 
+      <ClaimType Id="customColors">
+        <DisplayName>Favorite colors</DisplayName>
+        <DataType>stringCollection</DataType>
+        <UserHelpText>Favorite colors.</UserHelpText>
+      </ClaimType>
+
       <ClaimType Id="userPrincipalName">
         <DisplayName>UserPrincipalName</DisplayName>
         <DataType>string</DataType>
@@ -906,6 +912,27 @@
           </InputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
+        <TechnicalProfile Id="REST-LocalClaimExtender">
+          <DisplayName>Use demo app for adding extra claim</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="ServiceUrl">https://blbpcnjx-5001.euw.devtunnels.ms/api/ClaimExtender</Item>
+            <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="DefaultUserMessageIfRequestFailed">Cannot process your super important validation request right now, please try again later.</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="userPrincipalName" />
+            <InputClaim ClaimTypeReferenceId="objectId" />
+            <InputClaim ClaimTypeReferenceId="givenName" />
+            <InputClaim ClaimTypeReferenceId="surName" />
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="customColors" />
+          </OutputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
+        </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
   </ClaimsProviders>
@@ -942,8 +969,14 @@
             <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
           </ClaimsExchanges>
         </OrchestrationStep>
+
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="RESTLocalClaimExtender" TechnicalProfileReferenceId="REST-LocalClaimExtender" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
  
-        <OrchestrationStep Order="4" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="5" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
     
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
