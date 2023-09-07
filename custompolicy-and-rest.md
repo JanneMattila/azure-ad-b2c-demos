@@ -114,7 +114,7 @@ Sign in using local account:
 
 ![Sign in to Azure AD B2C using local account](https://github.com/JanneMattila/azure-ad-b2c-demos/assets/2357647/6d7520d2-5b66-4b45-adba-1994be3ba4dc)
 
-Breakpoint in Visual Studio show the incoming claims:
+Breakpoint in Visual Studio shows the incoming claims:
 
 ![VS in Debug mode showing the incoming claims](https://github.com/JanneMattila/azure-ad-b2c-demos/assets/2357647/d46a9040-f167-4961-84cc-2609a3d28300)
 
