@@ -1,6 +1,6 @@
-# Custom policy
+# Custom policy & Rest API example
 
-## Links
+## Official documentation links
 
 https://learn.microsoft.com/en-us/azure/active-directory-b2c/custom-policy-overview
 
@@ -84,10 +84,10 @@ Above input claim definition in the Rest API application means that your app wil
 Let's implement Rest API which returns following static response:
 
 ```json
- {
-  "customColors": [ "red", "green", "blue" ]
- }
- ```
+{
+ "customColors": [ "red", "green", "blue" ]
+}
+```
 
 You can now test this in your Azure AD B2C:
 
@@ -97,11 +97,11 @@ Sign in using local account:
 
 ![Sign in to Azure AD B2C using local account](https://github.com/JanneMattila/azure-ad-b2c-demos/assets/2357647/6d7520d2-5b66-4b45-adba-1994be3ba4dc)
 
-Breakpoint in Visual Studio to show the incoming claims:
+Breakpoint in Visual Studio show the incoming claims:
 
 ![VS in Debug mode showing the incoming claims](https://github.com/JanneMattila/azure-ad-b2c-demos/assets/2357647/d46a9040-f167-4961-84cc-2609a3d28300)
 
-Target application has received the token with the new claim:
+Target application has received the token with the new `customColors` claim:
 
 ![jwt.ms showing token content](https://github.com/JanneMattila/azure-ad-b2c-demos/assets/2357647/68621ec0-5783-4c19-8530-e1c515800f83)
 
@@ -109,7 +109,7 @@ Target application has received the token with the new claim:
 
 [Handling error messages](https://learn.microsoft.com/en-us/azure/active-directory-b2c/api-connectors-overview?pivots=b2c-custom-policy#handling-error-messages)
 
-For that document:
+From that document:
 
 > ... calling a REST API technical profile from a **validation technical profile**. 
 > **Letting the user to correct the data on the page and run the validation again** upon page submission.
