@@ -141,3 +141,5 @@ From that document:
 In more generic connection error case you might see following error message:
 
 ![Connection error](https://github.com/JanneMattila/azure-ad-b2c-demos/assets/2357647/03138866-22d6-4543-af24-abee7cee9e20)
+
+See also `ContinueOnError` setting from [here](https://learn.microsoft.com/en-us/azure/active-directory-b2c/validation-technical-profile#validationtechnicalprofiles).
