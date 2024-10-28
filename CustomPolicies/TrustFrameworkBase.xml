@@ -201,6 +201,17 @@
         <UserHelpText>Favorite colors.</UserHelpText>
       </ClaimType>
 
+      <ClaimType Id="option">
+        <DisplayName>option</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
+
+      <ClaimType Id="signUpFlow">
+        <DisplayName>SignUpFlow</DisplayName>
+        <DataType>boolean</DataType>
+        <AdminHelpText>Add help text here</AdminHelpText>
+      </ClaimType>
+
       <ClaimType Id="userPrincipalName">
         <DisplayName>UserPrincipalName</DisplayName>
         <DataType>string</DataType>
@@ -321,6 +332,19 @@
         <InputParameters>
           <InputParameter Id="valueToCompareTo" DataType="boolean" Value="true" />
         </InputParameters>
+      </ClaimsTransformation>
+
+      <ClaimsTransformation Id="CheckIsSignUp" TransformationMethod="StringContains">
+        <InputClaims>
+          <InputClaim ClaimTypeReferenceId="option" TransformationClaimType="inputClaim" />
+        </InputClaims>
+        <InputParameters>
+          <InputParameter Id="contains" DataType="string" Value="signup" />
+          <InputParameter Id="ignoreCase" DataType="string" Value="true" />
+        </InputParameters>
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="signUpFlow" TransformationClaimType="outputClaim" />
+        </OutputClaims>
       </ClaimsTransformation>
     </ClaimsTransformations>
 
@@ -891,6 +915,26 @@
     </ClaimsProvider>
 
     <ClaimsProvider>
+      <DisplayName>Claims Transformation</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Get-sign-up-claim-resolver">
+          <DisplayName>Get identity provider list</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
+          </Metadata>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="option" DefaultValue="{OAUTH-KV:option}" AlwaysUseDefaultValue="true" />
+          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CheckIsSignUp" />
+          </OutputClaimsTransformations>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
       <DisplayName>Rest</DisplayName>
       <TechnicalProfiles>
         <!-- Example rest call to external system. -->
@@ -909,6 +953,8 @@
             <InputClaim ClaimTypeReferenceId="objectId" />
             <InputClaim ClaimTypeReferenceId="givenName" />
             <InputClaim ClaimTypeReferenceId="surName" />
+            <InputClaim ClaimTypeReferenceId="option" />
+            <InputClaim ClaimTypeReferenceId="signUpFlow" />
           </InputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
@@ -916,7 +962,7 @@
           <DisplayName>Use demo app for adding extra claim</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
           <Metadata>
-            <Item Key="ServiceUrl">https://blbpcnjx-5001.euw.devtunnels.ms/api/ClaimExtender</Item>
+            <Item Key="ServiceUrl">https://r421jg7t-5001.euw.devtunnels.ms/api/ClaimExtender</Item>
             <Item Key="AuthenticationType">None</Item>
             <Item Key="AllowInsecureAuthInProduction">true</Item>
             <Item Key="SendClaimsIn">Body</Item>
@@ -941,8 +987,14 @@
 
     <UserJourney Id="SignUpOrSignIn">
       <OrchestrationSteps>
+
+        <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="Get-sign-up-claim-resolver" TechnicalProfileReferenceId="Get-sign-up-claim-resolver" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
    
-        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+        <OrchestrationStep Order="2" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
           <ClaimsProviderSelections>
             <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
           </ClaimsProviderSelections>
@@ -951,7 +1003,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="2" Type="ClaimsExchange">
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -964,19 +1016,19 @@
         </OrchestrationStep>
 
         <!-- This step reads any user attributes that we may not have received when in the token. -->
-        <OrchestrationStep Order="3" Type="ClaimsExchange">
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
           <ClaimsExchanges>
             <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="4" Type="ClaimsExchange">
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
           <ClaimsExchanges>
             <ClaimsExchange Id="RESTLocalClaimExtender" TechnicalProfileReferenceId="REST-LocalClaimExtender" />
           </ClaimsExchanges>
         </OrchestrationStep>
  
-        <OrchestrationStep Order="5" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
     
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
