@@ -1,18 +1,18 @@
 Param (
     [Parameter(HelpMessage = "Deployment storage account resource group")] 
-    [string] $DeploymentResourceGroupName = "rg-azure-ad-b2c-demo",
+    [string] $DeploymentResourceGroupName = "rg-b2c",
 
     [Parameter(HelpMessage = "Deployment storage account name")] 
-    [string] $DeploymentStorageName = "jannemattilab2cdemo",
+    [string] $DeploymentStorageName = "jannemattilab2cdemos",
 
     [Parameter(HelpMessage = "Deployment container")] 
     [string] $DeploymentContainer = "b2c",
 
     [Parameter(HelpMessage = "Deployment location")] 
-    [string] $Location = "North Europe",
+    [string] $Location = "Sweden Central",
 
     [Parameter(HelpMessage = "Tenant url")] 
-    [string] $TenantUrl = "jannemattilab2cdemo.b2clogin.com"
+    [string] $TenantUrl = "jannemattilab2cdemos.b2clogin.com"
 )
 
 $ErrorActionPreference = "Stop"

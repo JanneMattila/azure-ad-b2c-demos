@@ -1,18 +1,18 @@
 Param (
     [Parameter(HelpMessage = "Tenant name")] 
-    [string] $TenantName = "jannemattilab2cdemo.onmicrosoft.com",
+    [string] $TenantName = "jannemattilab2cdemos.onmicrosoft.com",
 
     [Parameter(HelpMessage = "Content definitions root uri")] 
-    [string] $ContentRootUri = "https://jannemattilab2cdemo.blob.core.windows.net/b2c/",
+    [string] $ContentRootUri = "https://jannemattilab2cdemos.blob.core.windows.net/b2c/",
 
     [Parameter(HelpMessage = "IEF App Id")] 
-    [string] $IdentityExperienceFrameworkAppId = "7710d04e-f1bf-4ccb-a182-0c24ff1abd9b",
+    [string] $IdentityExperienceFrameworkAppId = "fa0dd112-68a3-4d62-8ab7-c0d24d0fdf63",
     
     [Parameter(HelpMessage = "Proxy IEF App Id")] 
-    [string] $ProxyIdentityExperienceFrameworkAppId = "e527f2ea-baff-4312-abb1-1a190a8ba9b3",
+    [string] $ProxyIdentityExperienceFrameworkAppId = "695069f2-f525-4d91-94cd-604eadf458a5",
     
     [Parameter(HelpMessage = "Application Insights Instrumentation Key")] 
-    [string] $InstrumentationKey = "af0fa349-a4ff-49f3-a943-a3bcecdedba9",
+    [string] $InstrumentationKey = "21baea28-c787-4eba-b401-2f282003fa1e",
 
     [Parameter(HelpMessage = "Logging mode")] 
     [string] $LoggingMode = "Development"

@@ -24,15 +24,23 @@ Param (
 $ErrorActionPreference = "Stop"
 
 $sourceFile = "$PSScriptRoot\$CustomPolicy.xml"
-$targetFile = "$PSScriptRoot\Deploy-$CustomPolicy.xml"
-Get-Content $sourceFile | `
-        ForEach-Object { $_ -Replace "yourtenant.onmicrosoft.com", $TenantName } | `
-        ForEach-Object { $_ -Replace "~/tenant/templates/AzureBlue/", $ContentRootUri } | `
-        ForEach-Object { $_ -Replace "ProxyIdentityExperienceFrameworkAppId", $ProxyIdentityExperienceFrameworkAppId } | `
-        ForEach-Object { $_ -Replace "IdentityExperienceFrameworkAppId", $IdentityExperienceFrameworkAppId } | `
-        ForEach-Object { $_ -Replace "APPINSIGHTS_INSTRUMENTATIONKEY", $InstrumentationKey } | `
-        ForEach-Object { $_ -Replace "APPINSIGHTS_LOGGINGMODE", $LoggingMode } | `
-        Set-Content $targetFile
+$payload = Get-Content $sourceFile | `
+    ForEach-Object { $_ -Replace "yourtenant.onmicrosoft.com", $TenantName } | `
+    ForEach-Object { $_ -Replace "~/tenant/templates/AzureBlue/", $ContentRootUri } | `
+    ForEach-Object { $_ -Replace "ProxyIdentityExperienceFrameworkAppId", $ProxyIdentityExperienceFrameworkAppId } | `
+    ForEach-Object { $_ -Replace "IdentityExperienceFrameworkAppId", $IdentityExperienceFrameworkAppId } | `
+    ForEach-Object { $_ -Replace "APPINSIGHTS_INSTRUMENTATIONKEY", $InstrumentationKey } | `
+    ForEach-Object { $_ -Replace "APPINSIGHTS_LOGGINGMODE", $LoggingMode } | `
+    Out-String
 
-Set-AzureADMSTrustFrameworkPolicy -Id "B2C_1A_$CustomPolicy" -InputFilePath $targetFile | Out-Null
-Remove-Item $targetFile
+# https://learn.microsoft.com/en-us/graph/api/trustframework-put-trustframeworkpolicy?view=graph-rest-beta
+# https://learn.microsoft.com/en-us/powershell/module/microsoft.graph.beta.identity.signins/update-mgbetatrustframeworkpolicy?view=graph-powershell-beta
+Invoke-MgGraphRequest `
+    -Method Put `
+    -Uri "https://graph.microsoft.com/beta/trustFramework/policies/B2C_1A_$($CustomPolicy)/`$value" `
+    -ContentType "application/xml" `
+    -Body $payload `
+    -OutputFilePath temp_$CustomPolicy.xml
+
+# Get-Content "temp_$CustomPolicy.xml"
+Remove-Item "temp_$CustomPolicy.xml"

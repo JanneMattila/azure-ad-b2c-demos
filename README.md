@@ -20,6 +20,7 @@ $storageName = "<your storage account name>"
 $iefAppId = "<guid>"
 $proxyAppId = "<guid>"
 $instrumentationKey = "<app insights instrumentation key>"
+$contentRootUri = "https://$storageName.blob.core.windows.net/b2c/"
 $loggingMode = "Development" # or 'Production'
 
 Login-AzAccount
@@ -31,9 +32,9 @@ Select-AzSubscription -SubscriptionName "<your subscription name>"
   -DeploymentStorageName $storageName `
   -TenantUrl $b2cUrl
 
-# Install-Module AzureADPreview
-Import-Module AzureADPreview -UseWindowsPowerShell
-Connect-AzureAD -TenantId $b2cTenantName
+# Connect to your B2C tenant
+Install-Module Microsoft.Graph.Beta
+Connect-MgGraph -TenantId $b2cTenantName -Scopes "https://graph.microsoft.com/.default"
 
 # Deploy custom policies
 .\CustomPolicies\deploy.ps1 `
@@ -43,6 +44,8 @@ Connect-AzureAD -TenantId $b2cTenantName
   -ProxyIdentityExperienceFrameworkAppId $proxyAppId `
   -InstrumentationKey $instrumentationKey `
   -LoggingMode $loggingMode
+
+Disconnect-MgGraph
 ```
 
 ### API Connectors
