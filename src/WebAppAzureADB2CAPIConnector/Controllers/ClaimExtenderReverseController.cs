@@ -35,7 +35,7 @@ public class ClaimExtenderReverseController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult Post(Dictionary<string, object> body)
     {
-        var reverseOption = body.TryGetValue("option", out object value) ? new string(value.ToString().Reverse().ToArray()) : null;
+        var reverseOption = body.TryGetValue("option", out object value) && value != null ? new string(value.ToString().Reverse().ToArray()) : null;
         return Ok(new
         {
             TextReversed = reverseOption
