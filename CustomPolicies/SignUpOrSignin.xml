@@ -39,6 +39,7 @@
         <!-- Example additional custom claim -->
         <OutputClaim ClaimTypeReferenceId="customColors" />
         <OutputClaim ClaimTypeReferenceId="option" />
+        <OutputClaim ClaimTypeReferenceId="reverseOption" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />
     </TechnicalProfile>

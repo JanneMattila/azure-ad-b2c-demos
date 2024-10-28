@@ -206,6 +206,11 @@
         <DataType>string</DataType>
       </ClaimType>
 
+      <ClaimType Id="reverseOption">
+        <DisplayName>reverseOption</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
+
       <ClaimType Id="signUpFlow">
         <DisplayName>SignUpFlow</DisplayName>
         <DataType>boolean</DataType>
@@ -954,6 +959,7 @@
             <InputClaim ClaimTypeReferenceId="givenName" />
             <InputClaim ClaimTypeReferenceId="surName" />
             <InputClaim ClaimTypeReferenceId="option" />
+            <InputClaim ClaimTypeReferenceId="reverseOption" />
             <InputClaim ClaimTypeReferenceId="signUpFlow" />
           </InputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
@@ -976,6 +982,28 @@
           </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="customColors" />
+          </OutputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
+        </TechnicalProfile>
+        <TechnicalProfile Id="REST-LocalClaimReverseExtender">
+          <DisplayName>Use demo app for adding extra claim by reversing the option</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="ServiceUrl">https://r421jg7t-5001.euw.devtunnels.ms/api/ClaimExtenderReverse</Item>
+            <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="DefaultUserMessageIfRequestFailed">Cannot process your super important validation request right now, please try again later.</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="userPrincipalName" />
+            <InputClaim ClaimTypeReferenceId="objectId" />
+            <InputClaim ClaimTypeReferenceId="givenName" />
+            <InputClaim ClaimTypeReferenceId="surName" />
+            <InputClaim ClaimTypeReferenceId="option" />
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="reverseOption" PartnerClaimType="TextReversed" />
           </OutputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
@@ -1027,8 +1055,14 @@
             <ClaimsExchange Id="RESTLocalClaimExtender" TechnicalProfileReferenceId="REST-LocalClaimExtender" />
           </ClaimsExchanges>
         </OrchestrationStep>
- 
-        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="RESTLocalClaimReverseExtender" TechnicalProfileReferenceId="REST-LocalClaimReverseExtender" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
     
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
